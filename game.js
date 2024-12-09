@@ -23,8 +23,41 @@ const player = {
   },
 }
 
+// menus
+
+const areaBoxes = document.querySelectorAll('.area-box');
+
+const buttonToBoxMap = {
+  inventory: 'inventory-box',
+  stats: 'stats-box',
+  codex: 'codex-box',
+  credits: 'credits-box',
+  goreForest: 'gore-forest-box',
+};
+
+function showAreaBox(boxID) {
+  areaBoxes.forEach(box => box.classList.remove('active'));
+  const boxToShow = document.getElementById(boxID);
+  if (boxToShow) {
+    boxToShow.classList.add('active');
+  }
+}
+
+Object.keys(buttonToBoxMap).forEach(buttonId => {
+  const button = document.getElementById(buttonId);
+  button.addEventListener('click', () => {
+    const boxId = buttonToBoxMap[buttonId];
+    showAreaBox(boxId);
+  });
+});
+
+//intializing on game start
+showAreaBox('gore-forest-box');
+
+
+
 // targeting html container for player stats
-const playerStats = document.querySelector(".player-stats");
+const statsBox = document.querySelector("#stats-box");
 
 /**
  * @description for each stat in player, create a new div
@@ -34,7 +67,7 @@ const playerStats = document.querySelector(".player-stats");
 for (const stat in player) {
   const statElement = document.createElement("div");
   statElement.textContent = `${stat}: ${player[stat]}`
-  playerStats.appendChild(statElement);
+  statsBox.appendChild(statElement);
 }
 
 // targeting html container for areas
@@ -45,20 +78,11 @@ const areaBox = document.querySelector(".area-box");
 const GoreForest = {
   label: "Gore Forest",
   description: "A dead forest...",
-  button: document.createElement("button"),
 }
-
-GoreForest.button.textContent = `${GoreForest.label}`
-areaContainer.appendChild(GoreForest.button);
 
 const goreForestBox = document.querySelector("#gore-forest-box");
 const cutWoodButton = document.querySelector("#cut-wood-button");
 const exploreGoreForestButton = document.querySelector("#explore-gore-forest-button")
-
-GoreForest.button.addEventListener("click", () => {
-  goreForestBox.style.display = "block";
-  player.Location = GoreForest.label;
-})
 
 cutWoodButton.addEventListener("click", () => {
   if (player.hasAxe == false) {

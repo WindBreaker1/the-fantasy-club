@@ -8,19 +8,63 @@
   <title>The Fantasy Club</title>
 </head>
 <body>
+
+  <header id="header">
+    <div>The Fantasy Club</div>
+    <div>A game by zaalmoxxis</div>
+  </header>
+
   <div class="game-container">
-    <div class="player-stats"></div>
-    <div class="area-box" id="gore-forest-box">
+
+    <div class="menu">
+      <div id="player-name">Nameless</div>
+      <button id="inventory">Inventory</button>
+      <button id="stats">Stats</button>
+      <button id="codex">Codex</button>
+      <button id="credits">Credits</button>
+    </div>
+    
+    <div id="inventory-box" class="area-box">
+      <div><u>Inventory</u></div>
+      <p>Your items will be listed here.</p>
+    </div>
+
+    <div id="stats-box" class="area-box">
+      <div><u>Player Statistics</u></div>
+      <p>Your stats will be shown here.</p>
+    </div>
+
+    <div id="codex-box" class="area-box">
+      <div><u>Codex</u></div>
+      <p>Game lore and information appear here.</p>
+    </div>
+
+    <div id="credits-box" class="area-box">
+      <div><u>Credits</u></div>
+      <p>Thank you for playing!</p>
+      <p>Coded by zaalmoxxis.</p>
+      <p>Consider supporting me on Patreon!</p>
+      <hr>
+      <p>version 0.1</p>
+    </div>
+    
+    <div id="gore-forest-box" class="area-box">
       <div><u>Gore Forest</u></div>
       <button id="explore-gore-forest-button">Explore</button>
       <button id="cut-wood-button">Cut Wood</button>
     </div>
+    
     <div class="areas">
       <div>Areas</div>
+      <button id="goreForest">Gore Forest</button>
     </div>
+    
   </div>
+
   <div class="chat-box"></div>
+
   <div class="choices"></div>
+  
   <input class="text-input" type="text" placeholder="Make your voice known...">
 
   <canvas id="gameCanvas"></canvas>

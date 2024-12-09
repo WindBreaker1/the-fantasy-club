@@ -10,6 +10,15 @@ button {
   cursor: pointer;
 }
 
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+}
+
 .game-container {
   display: flex;
   flex-direction: row;
@@ -17,7 +26,8 @@ button {
   justify-content: space-between;
 }
 
-.player-stats {
+
+.menu {
   display: flex;
   flex-direction: column;
   border: 1px solid grey;
@@ -41,11 +51,15 @@ button {
 
 .area-box {
   display: none;
-  width: 300px;
+  width: 400px;
   height: 300px;
   border: 1px solid grey;
   padding: 10px;
   overflow: auto;
+}
+
+.area-box.active {
+  display: block;
 }
 
 .area-box > * {
