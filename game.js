@@ -18,6 +18,9 @@ const player = {
   isDead: false,
   hasAxe: false,
   hasWeapon: false,
+  endingsUnlocked: {
+    ending_one: false,
+  },
 }
 
 // targeting html container for player stats
@@ -89,7 +92,7 @@ textInput.addEventListener("keydown", (event) => {
 // gore forest story
 let currentScene = "gf_0";
 const goreForestStory = {
-  gf_0: { speaker: `[Game]`, text: `You wake up in a dark place.`, next: "gf_1" },
+  gf_0: { speaker: `[Game]`, text: `You wake up in a dark, dark place.`, next: "gf_1" },
   gf_1: { speaker: `[Game]`, text: `It's eerily silent...`, next: "gf_2" },
   gf_2: { speaker: `[Game]`, text: `It's moist...`, next: "gf_3" },
   gf_3: { speaker: `[Game]`, text: `It smells of flowers...`, next: "gf_4" },
@@ -98,19 +101,19 @@ const goreForestStory = {
     speaker: `[Yourself]`,
     text: `Do you respond to the light?`,
     choices: [
-      { text: `Yes`, next: `gf_continue`, effect: () => {playerTakesDamage(50)} },
+      { text: `Yes`, next: `gf_6`, effect: () => {playerTakesDamage(50)} },
       { text: `No`, next: `ending_one` }
     ]
   },
-  gf_continue: { speaker: `[Game]`, text: `An angelic voice calls out to you.`, next: null },
+  gf_6: { speaker: `[Game]`, text: `An angelic voice calls out to you.`, next: null },
   ending_one: { 
     speaker: `[Game]`, 
     text: `You choose to stay in the dark and warm embrace of death...`,
     next: null,
     choices: [
-      { text: `Reset`, effect: () => {resetGame()} }
+      { text: `Reset Universe`, effect: () => location.reload() }
     ]
-  }
+  },
 };
 
 const choicesDiv = document.querySelector(".choices");
@@ -142,12 +145,10 @@ function displayScene(sceneKey) {
       // Add event listener for the choice
       button.addEventListener("click", () => {
         if (choice.effect) {
-          // Execute the effect if it exists
           choice.effect();
-        } else {
-          currentScene = choice.next; // Set the next scene
-          displayScene(currentScene); // Immediately show the next scene
         }
+        currentScene = choice.next;
+        displayScene(currentScene);
       });
 
       choicesDiv.appendChild(button);
