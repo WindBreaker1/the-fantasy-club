@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  overflow: auto;
+  background-color: #292929;
+  color: #fff;
+  padding: 10px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  justify-content: space-between;
+}
+
+.player-stats {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid grey;
+  padding: 10px;
+  gap: 10px;
+  width: fit-content;
+  height: 300px;
+  overflow: auto;
+}
+
+.areas {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid grey;
+  padding: 10px;
+  gap: 20px;
+  width: fit-content;
+  height: 300px;
+  overflow: auto;
+}
+
+.area-box {
+  display: none;
+  width: 300px;
+  height: 300px;
+  border: 1px solid grey;
+  padding: 10px;
+}
+
+.area-box > * {
+  margin-top: 5px;
+}
+
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid grey;
+  margin-top: 10px;
+  padding: 10px;
+  height: 180px;
+  overflow: auto;
+}
+
+.choices {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px solid grey;
+  height: 60px;
+}
+
+.choices button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.text-input {
+  margin-top: 5px;
+  background-color: #181818;
+  color: #fff;
+  padding: 5px;
+  border: 1px solid gray;
+  height: 30px;
+  width: 98.5%;
+  overflow: auto;
+}

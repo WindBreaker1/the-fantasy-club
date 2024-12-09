@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="An open-world text-adventure game.">
+  <title>The Fantasy Club</title>
+</head>
+<body>
+  <div class="game-container">
+    <div class="player-stats"></div>
+    <div class="area-box" id="gore-forest-box">
+      <div><u>Gore Forest</u></div>
+      <button id="explore-gore-forest-button">Explore</button>
+      <button id="cut-wood-button">Cut Wood</button>
+    </div>
+    <div class="areas">
+      <div>Areas</div>
+    </div>
+  </div>
+  <div class="chat-box"></div>
+  <div class="choices"></div>
+  <input class="text-input" type="text" placeholder="Make your voice known...">
+
+  <canvas id="gameCanvas"></canvas>
+  <script src="game.js"></script>
+</body>
+</html>
