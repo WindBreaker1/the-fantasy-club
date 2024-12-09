@@ -103,7 +103,14 @@ const goreForestStory = {
     ]
   },
   gf_continue: { speaker: `[Game]`, text: `An angelic voice calls out to you.`, next: null },
-  ending_one: { speaker: `[Game]`, text: `You choose to stay in the dark and warm embrace of death...`, next: null }
+  ending_one: { 
+    speaker: `[Game]`, 
+    text: `You choose to stay in the dark and warm embrace of death...`,
+    next: null,
+    choices: [
+      { text: `Reset`, effect: () => {resetGame()} }
+    ]
+  }
 };
 
 const choicesDiv = document.querySelector(".choices");
@@ -120,7 +127,9 @@ exploreGoreForestButton.addEventListener("click", () => {
 function displayScene(sceneKey) {
   const scene = goreForestStory[sceneKey];
 
-  addDialogue(scene.speaker, scene.text);
+  if (scene.text) {
+    addDialogue(scene.speaker, scene.text);
+  }
 
   choicesDiv.innerHTML = "";
 
@@ -132,10 +141,12 @@ function displayScene(sceneKey) {
 
       // Add event listener for the choice
       button.addEventListener("click", () => {
-        currentScene = choice.next;
-        displayScene(currentScene)
         if (choice.effect) {
-          choice.effect(); // Apply the effect
+          // Execute the effect if it exists
+          choice.effect();
+        } else {
+          currentScene = choice.next; // Set the next scene
+          displayScene(currentScene); // Immediately show the next scene
         }
       });
 
@@ -171,13 +182,25 @@ displayScene(currentScene);
 
 
 
-
+// function for resetting the game
+function resetGame() {
+  location.reload();
+}
 
 // function for player damage
 function playerTakesDamage(damage) {
   player.HP -= damage;
   addDialogue("[Game]", `${player.Name} takes ${damage} damage...`)
 }
+
+
+
+
+
+
+
+
+
 
 
 // ======================= Testing Area ========================= //

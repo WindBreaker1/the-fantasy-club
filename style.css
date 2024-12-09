@@ -45,6 +45,7 @@ button {
   height: 300px;
   border: 1px solid grey;
   padding: 10px;
+  overflow: auto;
 }
 
 .area-box > * {
