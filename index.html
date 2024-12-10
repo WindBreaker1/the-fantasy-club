@@ -27,6 +27,20 @@
     <div id="inventory-box" class="area-box">
       <div><u>Inventory</u></div>
       <p>Your items will be listed here.</p>
+      <table id="inventory-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div id="stats-box" class="area-box">
@@ -61,13 +75,13 @@
     
   </div>
 
-  <div class="chat-box"></div>
+  <div class="dialogue-box"></div>
 
   <div class="choices"></div>
   
   <input class="text-input" type="text" placeholder="Make your voice known...">
 
   <canvas id="gameCanvas"></canvas>
-  <script src="game.js"></script>
+  <script type="module" src="game.js"></script>
 </body>
 </html>

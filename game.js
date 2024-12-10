@@ -1,30 +1,15 @@
-// inititalising player object
-const player = {
-  // important stuff
-  Name: 'Uga-Buga',
-  Description: 'Buff dude.',
-  HP: 100,
-  MP: 100,
-  AP: 10,
-  Gold: 0,
-  Location: '',
-  // player statistics
-  Strength: 8,
-  Dexterity: 10,
-  Constitution: 0,
-  Luck: 4,
-  Charisma: 0,
-  // player game states
-  isDead: false,
-  hasAxe: false,
-  hasWeapon: false,
-  endingsUnlocked: {
-    ending_one: false,
-  },
-}
+// ===================================== Imports ==================================== //
+import player from './scripts/player.js'
+import items from './scripts/items.js'
+import enemies from './scripts/enemy.js'
 
-// menus
+// ================================= HTML DOM elements ================================ //
+// intialize dialogue box
+const dialogueBox = document.querySelector(".dialogue-box");
+// intialize text input
+const textInput = document.querySelector(".text-input");
 
+// ======================================= Menus ====================================== //
 const areaBoxes = document.querySelectorAll('.area-box');
 
 const buttonToBoxMap = {
@@ -52,7 +37,7 @@ Object.keys(buttonToBoxMap).forEach(buttonId => {
 });
 
 //intializing on game start
-showAreaBox('gore-forest-box');
+showAreaBox('inventory-box');
 
 
 
@@ -70,9 +55,8 @@ for (const stat in player) {
   statsBox.appendChild(statElement);
 }
 
-// targeting html container for areas
-const areaContainer = document.querySelector(".areas");
-const areaBox = document.querySelector(".area-box");
+
+// ==================================== Gore Forest =============================== //
 
 // gore forest
 const GoreForest = {
@@ -80,7 +64,6 @@ const GoreForest = {
   description: "A dead forest...",
 }
 
-const goreForestBox = document.querySelector("#gore-forest-box");
 const cutWoodButton = document.querySelector("#cut-wood-button");
 const exploreGoreForestButton = document.querySelector("#explore-gore-forest-button")
 
@@ -92,17 +75,9 @@ cutWoodButton.addEventListener("click", () => {
   }
 })
 
-// intialize chatbox
-const chatBox = document.querySelector(".chat-box");
-// function for chatbox
-function addDialogue(speaker, dialogue) {
-  const dialogueDiv = document.createElement("div");
-  dialogueDiv.textContent = `${speaker}: ${dialogue}`;
-  chatBox.insertBefore(dialogueDiv, chatBox.firstChild);
-}
 
-// add chat input
-const textInput = document.querySelector(".text-input");
+
+
 // on Enter keypress, add the text to the dialogue box
 textInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
@@ -113,6 +88,7 @@ textInput.addEventListener("keydown", (event) => {
   }
 })
 
+// ================================== Story ===================================== //
 // gore forest story
 let currentScene = "gf_0";
 const goreForestStory = {
@@ -125,7 +101,7 @@ const goreForestStory = {
     speaker: `[Yourself]`,
     text: `Do you respond to the light?`,
     choices: [
-      { text: `Yes`, next: `gf_6`, effect: () => {playerTakesDamage(50)} },
+      { text: `Yes`, next: `gf_6`, effect: () => {player.takeDamage(50); addItem(items.Shovel)} },
       { text: `No`, next: `ending_one` }
     ]
   },
@@ -135,7 +111,7 @@ const goreForestStory = {
     text: `You choose to stay in the dark and warm embrace of death...`,
     next: null,
     choices: [
-      { text: `Reset Universe`, effect: () => location.reload() }
+      { text: `Reset Universe`, effect: () => resetGame() }
     ]
   },
 };
@@ -205,18 +181,20 @@ displayScene(currentScene);
 
 
 
+// ================================ Important Functions =============================== //
 
+// function for adding dialogue text to the dialogue box
+export function addDialogue(speaker, dialogue) {
+  const dialogueDiv = document.createElement("div");
+  dialogueDiv.textContent = `${speaker}: ${dialogue}`;
+  dialogueBox.insertBefore(dialogueDiv, dialogueBox.firstChild);
+}
 
 // function for resetting the game
 function resetGame() {
   location.reload();
 }
 
-// function for player damage
-function playerTakesDamage(damage) {
-  player.HP -= damage;
-  addDialogue("[Game]", `${player.Name} takes ${damage} damage...`)
-}
 
 
 
@@ -228,37 +206,59 @@ function playerTakesDamage(damage) {
 
 
 
-// ======================= Testing Area ========================= //
+// =================================== Testing Area ====================================== //
 
-// initialising areas
-const area = {
-  Forest: {
-    label: "🌲Forest",
-    description: "Welcome to the Forest!",
-  },
-  Mountain: {
-    label: "🏔️Mountain",
-    description: "You are on a Mountain peak!",
-  },
-  Farm: {
-    label: "🧑‍🌾Farm",
-    description: "Welcome to the peaceful Farm!",
-  },
-}
+// put the player's chosen name inside the menu
+const playerNameText = document.querySelector("#player-name");
+playerNameText.textContent = player.Name;
+
+
+
+
+
+// targeting html container for player stats
+const inventoryTable = document.querySelector("#inventory-table");
 
 /**
- * @description similar to for loop on line 19 
+ * @description for each item in the player's inventory, create a new td
+ * @returns {HTMLElement} item-name | item-description
+ * @todo n/a
 */
-for (const specificArea in area) {
-  const areaButton = document.createElement("button");
-  areaButton.textContent = `${area[specificArea].label}`;
-  areaContainer.appendChild(areaButton);
+function refreshItemTable() {
+  for (const item in player.inventory) {
+    const row = document.createElement("tr");
+    
+    const nameCell = document.createElement("td");
+    nameCell.textContent = player.inventory[item].name;
+    
+    const descriptionCell = document.createElement("td");
+    descriptionCell.textContent = player.inventory[item].description;
   
-  areaButton.addEventListener("click", () => {
-    const areaData = area[specificArea];
-    areaBox.style.display = "block";
-    areaBox.textContent = areaData.description;
-    player.Location = areaData.label;
-    console.log(player.Location)
-  })
+    row.appendChild(nameCell);
+    row.appendChild(descriptionCell);
+  
+    inventoryTable.appendChild(row);
+  }
 }
+
+addItem(items.Rock);
+addItem(items.Dagger);
+addItem(items.Shovel);
+
+refreshItemTable();
+
+
+
+// function for adding items to the inventory
+function addItem(item) {
+  if (player.inventory[item.name]) {
+    addDialogue("[Game]", `${item.name} is already in inventory.`)
+  } else {
+    player.inventory[item.name] = {name: item.name, description: item.description};
+    addDialogue("[Game]", `${item.name} has been added to the inventory.`)
+  }
+}
+
+
+
+

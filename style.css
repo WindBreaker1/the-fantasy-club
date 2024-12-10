@@ -1,3 +1,4 @@
+/* general style choices */
 body {
   margin: 0;
   overflow: auto;
@@ -9,6 +10,24 @@ body {
 button {
   cursor: pointer;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table thead tr {
+  background-color: #242424;
+  color: white;
+}
+
+tr {
+  border-bottom: 1px solid grey;
+}
+
+/* specific style choices */
 
 #header {
   display: flex;
@@ -51,7 +70,7 @@ button {
 
 .area-box {
   display: none;
-  width: 400px;
+  width: 70%;
   height: 300px;
   border: 1px solid grey;
   padding: 10px;
@@ -66,7 +85,7 @@ button {
   margin-top: 5px;
 }
 
-.chat-box {
+.dialogue-box {
   display: flex;
   flex-direction: column;
   gap: 5px;
