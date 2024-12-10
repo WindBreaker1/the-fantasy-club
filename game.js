@@ -8,12 +8,15 @@ import enemies from './scripts/enemy.js'
 const dialogueBox = document.querySelector(".dialogue-box");
 // intialize text input
 const textInput = document.querySelector(".text-input");
+// intialize wood amount text
+const woodAmountText = document.querySelector("#wood-amount-text");
 
 // ======================================= Menus ====================================== //
 const areaBoxes = document.querySelectorAll('.area-box');
 
 const buttonToBoxMap = {
   inventory: 'inventory-box',
+  resources: 'resources-box',
   stats: 'stats-box',
   codex: 'codex-box',
   credits: 'credits-box',
@@ -37,7 +40,7 @@ Object.keys(buttonToBoxMap).forEach(buttonId => {
 });
 
 //intializing on game start
-showAreaBox('inventory-box');
+showAreaBox('gore-forest-box');
 
 
 
@@ -73,7 +76,7 @@ cutWoodButton.addEventListener("click", () => {
   } else {
     player.resources.wood += 1;
     addDialogue("[Game]", "You cut some wood!");
-    console.log(player.resources.wood);
+    woodAmountText.textContent = player.resources.wood;
   }
 })
 

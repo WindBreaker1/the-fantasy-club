@@ -1,14 +1,25 @@
 /* general style choices */
 body {
   margin: 0;
+  padding: 0;
   overflow: auto;
   background-color: #292929;
   color: #fff;
-  padding: 10px;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 button {
   cursor: pointer;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+button:hover {
+  transform: scale(1.2);
+  background-color: #c9c9c9;
+  border: none;
 }
 
 a {
@@ -44,15 +55,27 @@ tr {
   align-items: center;
   margin-bottom: 10px;
   border-bottom: 1px solid grey;
+  padding: 5px;
 }
 
 .game-container {
   display: flex;
-  flex-direction: row;
-  align-items: top;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
+.middle-game-wrapper {
+  box-sizing: border-box;
+}
+
+.middle-game-portion {
+  display: grid;
+  grid-template-columns: 0.2fr 1fr 0.2fr;
+  gap: 10px;
+  width: 100%;
+  max-width: 100vw; /* Prevents container from overflowing the viewport */
+  padding: 0 5px;
+  box-sizing: border-box; /* Makes sure padding is included in the width */
+}
 
 .menu {
   display: flex;
@@ -60,9 +83,30 @@ tr {
   border: 1px solid grey;
   padding: 10px;
   gap: 10px;
-  width: fit-content;
   height: 300px;
   overflow: auto;
+  flex: 0 0 20%;
+  box-sizing: border-box;
+}
+
+.area-box {
+  display: none;
+  height: 300px;
+  border: 1px solid grey;
+  padding: 10px;
+  overflow: auto;
+  flex: 0 0 60%;
+  box-sizing: border-box;
+}
+
+.area-box.active {
+  display: block;
+}
+
+.area-box-title {
+  font-size: 2rem;
+  text-decoration: underline;
+  margin-bottom: 15px;
 }
 
 .areas {
@@ -71,26 +115,10 @@ tr {
   border: 1px solid grey;
   padding: 10px;
   gap: 20px;
-  width: fit-content;
   height: 300px;
   overflow: auto;
-}
-
-.area-box {
-  display: none;
-  width: 70%;
-  height: 300px;
-  border: 1px solid grey;
-  padding: 10px;
-  overflow: auto;
-}
-
-.area-box.active {
-  display: block;
-}
-
-.area-box > * {
-  margin-top: 5px;
+  flex: 0 0 20%;
+  box-sizing: border-box;
 }
 
 .dialogue-box {
@@ -98,10 +126,10 @@ tr {
   flex-direction: column;
   gap: 5px;
   border: 1px solid grey;
-  margin-top: 10px;
   padding: 10px;
   height: 180px;
   overflow: auto;
+  margin: 10px 5px 0 5px;
 }
 
 .choices {
@@ -109,16 +137,17 @@ tr {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 5px;
   margin-bottom: 5px;
   border: 1px solid grey;
   height: 60px;
+  margin: 10px 5px 0 5px;
 }
 
 .choices button {
   margin: 5px;
   padding: 10px 20px;
   font-size: 16px;
+  height: 40px;
 }
 
 .text-input {
@@ -128,15 +157,15 @@ tr {
   padding: 5px;
   border: 1px solid gray;
   height: 30px;
-  width: 98.5%;
   overflow: auto;
+  margin: 10px 5px 0 5px;
 }
 
 /* individual areas */
 
 #gore-forest-box {
   background-color: #181818;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./public/gore-forest.webp');
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./public/gore-forest.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

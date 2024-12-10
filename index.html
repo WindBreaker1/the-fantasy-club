@@ -16,73 +16,107 @@
   </header>
 
   <div class="game-container">
-
-    <div class="menu">
-      <div id="player-name">Nameless</div>
-      <button id="inventory">Inventory</button>
-      <button id="stats">Stats</button>
-      <button id="codex">Codex</button>
-      <button id="credits">Credits</button>
-    </div>
+    <div class="middle-game-wrapper">
+      <div class="middle-game-portion">
+        <div class="menu">
+          <div id="player-name">Nameless</div>
+          <button id="inventory">Inventory</button>
+          <button id="resources">Resources</button>
+          <button id="stats">Stats</button>
+          <button id="codex">Codex</button>
+          <button id="credits">Credits</button>
+        </div>
+        
+        <div id="inventory-box" class="area-box">
+          <div class="area-box-title">Inventory</div>
+          <p>Your items will be listed here.</p>
+          <table id="inventory-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Rarity</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+              </tr>
+            </tbody>
+          </table>
+        </div>
     
-    <div id="inventory-box" class="area-box">
-      <div><u>Inventory</u></div>
-      <p>Your items will be listed here.</p>
-      <table id="inventory-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Rarity</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div id="stats-box" class="area-box">
-      <div><u>Player Statistics</u></div>
-      <p>Your stats will be shown here.</p>
-    </div>
-
-    <div id="codex-box" class="area-box">
-      <div><u>Codex</u></div>
-      <p>Game lore and information appear here.</p>
-    </div>
-
-    <div id="credits-box" class="area-box">
-      <div><u>Credits</u></div>
-      <p>Thank you for playing!</p>
-      <p>Coded by zaalmoxxis.</p>
-      <p>Consider supporting me on Patreon!</p>
-      <hr>
-      <p>Gore Forest BG image by <a href="https://www.pexels.com/@enginakyurt/" target="_blank" rel="noopener noreferrer">Engin Akyurt</a>.</p>
-      <hr>
-      <p>version 0.1</p>
-    </div>
+        <div id="resources-box" class="area-box">
+          <div class="area-box-title">Resources</div>
+          <p>Your resources will be listed here.</p>
+          <table id="resources-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Rarity</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Gold</td>
+                <td>Rare</td>
+                <td id="gold-amount-text">0</td>
+              </tr>
+              <tr>
+                <td>Wood</td>
+                <td>Common</td>
+                <td id="wood-amount-text">0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
     
-    <div id="gore-forest-box" class="area-box">
-      <div><u>Gore Forest</u></div>
-      <button id="explore-gore-forest-button">Explore</button>
-      <button id="cut-wood-button">Cut Wood</button>
-    </div>
+        <div id="stats-box" class="area-box">
+          <div class="area-box-title">Player Statistics</div>
+          <p>Your stats will be shown here.</p>
+        </div>
     
-    <div class="areas">
-      <div>Areas</div>
-      <button id="goreForest">Gore Forest</button>
+        <div id="codex-box" class="area-box">
+          <div class="area-box-title">Codex</div>
+          <p>Game lore and information appear here.</p>
+        </div>
+    
+        <div id="credits-box" class="area-box">
+          <div class="area-box-title">Credits</div>
+          <p>Thank you for playing!</p>
+          <p>Coded by zaalmoxxis.</p>
+          <p>Consider supporting me on Patreon!</p>
+          <hr>
+          <p>Gore Forest BG image by <a href="https://www.pexels.com/@enginakyurt/" target="_blank" rel="noopener noreferrer">Engin Akyurt</a>.</p>
+          <hr>
+          <p>version 0.1</p>
+        </div>
+        
+        <div id="gore-forest-box" class="area-box">
+          <div class="area-box-title">Gore Forest</div>
+          <p>Advance the story of the game.</p>
+          <button id="explore-gore-forest-button">Advance Story</button>
+          <hr>
+          <p>Cut some of the surrounding trees with your axe.</p>
+          <button id="cut-wood-button">Cut Wood</button>
+        </div>
+        
+        <div class="areas">
+          <div>Areas</div>
+          <button id="goreForest">Gore Forest</button>
+        </div>
+      </div>
     </div>
+
+    
+    
+    <div class="dialogue-box"></div>
+    
+    <div class="choices"></div>
+    
+    <input class="text-input" type="text" placeholder="Make your voice known...">
     
   </div>
-
-  <div class="dialogue-box"></div>
-
-  <div class="choices"></div>
-  
-  <input class="text-input" type="text" placeholder="Make your voice known...">
 
   <canvas id="gameCanvas"></canvas>
   <script type="module" src="game.js"></script>
