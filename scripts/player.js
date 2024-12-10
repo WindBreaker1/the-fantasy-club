@@ -10,19 +10,24 @@ const player = {
 	HP: 100,
 	MP: 100,
 	AP: 10,
-	Gold: 0,
 	Location: 'Womb',
 	// player statistics
 	Strength: 1,
 	Dexterity: 1,
+	Intelligence: 1,
 	Constitution: 1,
 	Luck: 1,
 	Charisma: 1,
 	// inventory
 	inventory: {},
+	// resources
+	resources: {
+		gold: 0,
+		wood: 0,
+	},
 	// player game states
 	isDead: false,
-	hasAxe: false,
+	hasAxe: true,
 	hasPickaxe: false,
 	hasWeapon: false,
 	endingsUnlocked: {

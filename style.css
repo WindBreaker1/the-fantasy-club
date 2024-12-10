@@ -11,6 +11,14 @@ button {
   cursor: pointer;
 }
 
+a {
+  color: #999999;
+}
+
+a:hover {
+  color: #e0e0e0;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -122,4 +130,14 @@ tr {
   height: 30px;
   width: 98.5%;
   overflow: auto;
+}
+
+/* individual areas */
+
+#gore-forest-box {
+  background-color: #181818;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./public/gore-forest.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

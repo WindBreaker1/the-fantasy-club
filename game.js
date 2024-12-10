@@ -71,7 +71,9 @@ cutWoodButton.addEventListener("click", () => {
   if (player.hasAxe == false) {
     addDialogue("[Game]", "You don't have an axe...")
   } else {
+    player.resources.wood += 1;
     addDialogue("[Game]", "You cut some wood!");
+    console.log(player.resources.wood);
   }
 })
 
@@ -187,7 +189,9 @@ displayScene(currentScene);
 export function addDialogue(speaker, dialogue) {
   const dialogueDiv = document.createElement("div");
   dialogueDiv.textContent = `${speaker}: ${dialogue}`;
-  dialogueBox.insertBefore(dialogueDiv, dialogueBox.firstChild);
+  //dialogueBox.insertBefore(dialogueDiv, dialogueBox.firstChild);
+  dialogueBox.appendChild(dialogueDiv);
+  dialogueBox.scrollTop = dialogueBox.scrollHeight;
 }
 
 // function for resetting the game
@@ -230,16 +234,21 @@ function refreshItemTable() {
     
     const nameCell = document.createElement("td");
     nameCell.textContent = player.inventory[item].name;
+
+    const rarityCell = document.createElement("td");
+    rarityCell.textContent = player.inventory[item].rarity;
     
     const descriptionCell = document.createElement("td");
     descriptionCell.textContent = player.inventory[item].description;
   
     row.appendChild(nameCell);
+    row.appendChild(rarityCell);
     row.appendChild(descriptionCell);
   
     inventoryTable.appendChild(row);
   }
 }
+
 
 addItem(items.Rock);
 addItem(items.Dagger);
@@ -254,7 +263,7 @@ function addItem(item) {
   if (player.inventory[item.name]) {
     addDialogue("[Game]", `${item.name} is already in inventory.`)
   } else {
-    player.inventory[item.name] = {name: item.name, description: item.description};
+    player.inventory[item.name] = {name: item.name, rarity: item.rarity, description: item.description};
     addDialogue("[Game]", `${item.name} has been added to the inventory.`)
   }
 }
@@ -262,3 +271,12 @@ function addItem(item) {
 
 
 
+
+
+
+
+
+
+
+// easter eggs
+console.log('I should add this in the game ☠️ \n https://youtu.be/s4LrhEer6aw?si=RDyJqKtiD6sozy9F')
