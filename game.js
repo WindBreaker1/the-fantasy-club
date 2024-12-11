@@ -1,7 +1,8 @@
 // ===================================== Imports ==================================== //
 import player from './scripts/player.js'
-import items from './scripts/items.js'
+import items, { Item } from './scripts/items.js'
 import enemies from './scripts/enemy.js'
+import { settings } from './scripts/settings.js';
 
 // ================================= HTML DOM elements ================================ //
 // intialize dialogue box
@@ -10,38 +11,10 @@ const dialogueBox = document.querySelector(".dialogue-box");
 const textInput = document.querySelector(".text-input");
 // intialize wood amount text
 const woodAmountText = document.querySelector("#wood-amount-text");
-
-// ======================================= Menus ====================================== //
-const areaBoxes = document.querySelectorAll('.area-box');
-
-const buttonToBoxMap = {
-  inventory: 'inventory-box',
-  resources: 'resources-box',
-  stats: 'stats-box',
-  codex: 'codex-box',
-  credits: 'credits-box',
-  goreForest: 'gore-forest-box',
-};
-
-function showAreaBox(boxID) {
-  areaBoxes.forEach(box => box.classList.remove('active'));
-  const boxToShow = document.getElementById(boxID);
-  if (boxToShow) {
-    boxToShow.classList.add('active');
-  }
-}
-
-Object.keys(buttonToBoxMap).forEach(buttonId => {
-  const button = document.getElementById(buttonId);
-  button.addEventListener('click', () => {
-    const boxId = buttonToBoxMap[buttonId];
-    showAreaBox(boxId);
-  });
-});
-
-//intializing on game start
-showAreaBox('gore-forest-box');
-
+// save, load, and reset buttons
+const saveGameButton = document.querySelector("#save-button");
+const loadGameButton = document.querySelector("#load-button");
+const resetGameButton = document.querySelector("#reset-button");
 
 
 // targeting html container for player stats
@@ -77,6 +50,7 @@ cutWoodButton.addEventListener("click", () => {
     player.resources.wood += 1;
     addDialogue("[Game]", "You cut some wood!");
     woodAmountText.textContent = player.resources.wood;
+    updateChoices();
   }
 })
 
@@ -104,9 +78,13 @@ const goreForestStory = {
   gf_4: { speaker: `[Game]`, text: `You see a faint light in the far distance...`, next: "gf_5" },
   gf_5: {
     speaker: `[Yourself]`,
-    text: `Do you respond to the light?`,
+    text: `Do you respond to the light? (You need 5 Wood...)`,
     choices: [
-      { text: `Yes`, next: `gf_6`, effect: () => {player.takeDamage(50); addItem(items.Shovel)} },
+      { text: `Yes`,
+        next: `gf_6`,
+        requirement: () => player.resources.wood >= 5,
+        effect: () => {player.takeDamage(50); addItem(items.Shovel); spendResource('wood', 5);} 
+      },
       { text: `No`, next: `ending_one` }
     ]
   },
@@ -146,6 +124,13 @@ function displayScene(sceneKey) {
     scene.choices.forEach((choice) => {
       const button = document.createElement("button");
       button.textContent = choice.text;
+
+      const isRequirementMet = choice.requirement ? choice.requirement() : true;
+
+      if (!isRequirementMet) {
+        button.disabled = true; // Disable the button if the requirement is not met
+        button.title = "Requirement not met"; // Optional: add a tooltip
+      }
 
       // Add event listener for the choice
       button.addEventListener("click", () => {
@@ -195,11 +180,6 @@ export function addDialogue(speaker, dialogue) {
   //dialogueBox.insertBefore(dialogueDiv, dialogueBox.firstChild);
   dialogueBox.appendChild(dialogueDiv);
   dialogueBox.scrollTop = dialogueBox.scrollHeight;
-}
-
-// function for resetting the game
-function resetGame() {
-  location.reload();
 }
 
 
@@ -253,9 +233,7 @@ function refreshItemTable() {
 }
 
 
-addItem(items.Rock);
-addItem(items.Dagger);
-addItem(items.Shovel);
+
 
 refreshItemTable();
 
@@ -268,8 +246,169 @@ function addItem(item) {
   } else {
     player.inventory[item.name] = {name: item.name, rarity: item.rarity, description: item.description};
     addDialogue("[Game]", `${item.name} has been added to the inventory.`)
+    refreshItemTable();
   }
 }
+
+// function for updating choices
+function updateChoices() {
+  const scene = goreForestStory[currentScene];
+
+  if (scene.choices) {
+    const buttons = choicesDiv.querySelectorAll("button");
+    scene.choices.forEach((choice, index) => {
+      const isRequirementMet = choice.requirement ? choice.requirement() : true;
+      const button = buttons[index];
+      button.disabled = !isRequirementMet;
+      button.title = isRequirementMet ? "" : "Requirement not met"; // Optional tooltip
+    });
+  }
+}
+
+// function for spending resources
+function spendResource(resource, amount) {
+  if (player.resources[resource] >= amount) {
+    player.resources[resource] -= amount;
+    woodAmountText.textContent = player.resources.wood; // Update display dynamically
+    return true;
+  }
+  return false; // Not enough resources
+}
+
+
+
+
+
+
+
+// =================================== Saving Progress =========================== //
+
+// saving the game
+function saveGame() {
+  const gameState = {
+    version: 0.1,
+
+    currentScene,
+    settings,
+    player: {
+      inventory: Object.values(player.inventory).map(item => ({
+        name: item.name,
+        rarity: item.rarity,
+        description: item.description,
+      })),
+      resources: player.resources,
+    },
+  }
+
+   // Serialize and encode the game state
+  const jsonString = JSON.stringify(gameState);
+  // Base64 encoding
+  const saveCode = btoa(jsonString);
+  // save in localStorage
+  localStorage.setItem("gameSave", saveCode);
+  // tell the player you saved their game
+  addDialogue("[Game]", "You saved your progress!");
+
+  console.log(`${saveCode}`);
+  
+  return saveCode;
+}
+
+saveGameButton.addEventListener("click", () => saveGame());
+
+// loading the game
+function loadGame(saveCode) {
+  try {
+    // Decode the Base64 save code
+    const jsonString = atob(saveCode);
+    const gameState = JSON.parse(jsonString);
+
+    // Restore game state
+    currentScene = gameState.currentScene;
+    settings = gameState.settings;
+    Object.assign(player.resources, gameState.player.resources);
+
+    woodAmountText.textContent = player.resources.wood;
+
+    // Load the scene
+    displayScene(currentScene);
+    console.log("Game loaded successfully!");
+  } catch (error) {
+    console.error("Failed to load game. Invalid save code.");
+  }
+}
+
+function loadGameFromInput() {
+  const saveCode = document.getElementById("saveCodeInput").value;
+  
+  if (saveCode) {
+    loadGame(saveCode);
+  } else {
+    console.error("No save code provided.");
+  }
+}
+
+document.querySelector("#load-button").addEventListener("click", loadGameFromInput);
+
+// loading the game upon reload of the page
+function reloadGame() {
+  window.addEventListener("load", () => {
+    const savedCode = localStorage.getItem("gameSave");
+    if (savedCode) {
+      loadGame(savedCode);
+    }
+  });
+}
+
+
+// eyJ2ZXJzaW9uIjowLjEsImN1cnJlbnRTY2VuZSI6ImdmXzEiLCJzZXR0aW5ncyI6WyJBcmlhbCJdLCJwbGF5ZXIiOnsiaW52ZW50b3J5IjpbXSwicmVzb3VyY2VzIjp7ImdvbGQiOjAsIndvb2QiOjB9fX0=
+
+
+
+// resetting the game
+function resetGame() {
+  localStorage.removeItem("gameSave");
+
+  currentScene = "gf_0";
+
+  player.Name = 'Nameless';
+  player.Description = 'Buff dude.';
+  player.HP = 100;
+  player.MP = 100;
+  player.AP = 10;
+  player.Location = 'Womb';
+  player.Strength = 1;
+  player.Dexterity = 1;
+  player.Intelligence = 1;
+  player.Constitution = 1;
+  player.Luck = 1;
+  player.Charisma = 1;
+  player.inventory = {};
+  player.resources = { gold: 0, wood: 0 };
+  player.isDead = false;
+  player.hasAxe = true;
+  player.hasPickaxe = false;
+  player.hasWeapon = false;
+  player.endingsUnlocked = { ending_one: false };
+
+  // Update UI elements (if necessary)
+  woodAmountText.textContent = player.resources.wood;
+  addDialogue("[Game]", "Your progress has been reset.");
+  
+  
+  console.log("Game progress reset to the beginning.");
+}
+
+resetGameButton.addEventListener("click", () => {resetGame()});
+
+
+
+
+
+
+
+
+
 
 
 

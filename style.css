@@ -1,4 +1,4 @@
-/* general style choices */
+/* ================================ General Styles ================================== */
 body {
   margin: 0;
   padding: 0;
@@ -14,12 +14,13 @@ button {
   width: fit-content;
   max-width: 100%;
   box-sizing: border-box;
+  border: none;
+  font-family: inherit;
 }
 
 button:hover {
-  transform: scale(1.2);
-  background-color: #c9c9c9;
-  border: none;
+  transform: scale(1.1);
+  background-color: #cecece;
 }
 
 a {
@@ -46,7 +47,7 @@ tr {
   border-bottom: 1px solid grey;
 }
 
-/* specific style choices */
+/* ============================ Specific Styles ============================ */
 
 #header {
   display: flex;
@@ -63,10 +64,6 @@ tr {
   flex-direction: column;
 }
 
-.middle-game-wrapper {
-  box-sizing: border-box;
-}
-
 .middle-game-portion {
   display: grid;
   grid-template-columns: 0.2fr 1fr 0.2fr;
@@ -80,6 +77,7 @@ tr {
 .menu {
   display: flex;
   flex-direction: column;
+  align-items: center;
   border: 1px solid grey;
   padding: 10px;
   gap: 10px;
@@ -87,6 +85,10 @@ tr {
   overflow: auto;
   flex: 0 0 20%;
   box-sizing: border-box;
+}
+
+.menu-button {
+  width: 80%;
 }
 
 .area-box {
@@ -112,6 +114,7 @@ tr {
 .areas {
   display: flex;
   flex-direction: column;
+  align-items: center;
   border: 1px solid grey;
   padding: 10px;
   gap: 20px;
@@ -161,7 +164,11 @@ tr {
   margin: 10px 5px 0 5px;
 }
 
-/* individual areas */
+.menu-horizontal-line {
+  width: 80%;
+}
+
+/* ================================= Individual Areas ================================= */
 
 #gore-forest-box {
   background-color: #181818;
@@ -169,4 +176,20 @@ tr {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+/* ============================== Mobile Responsiveness =============================== */
+
+@media (max-width: 768px) {
+  .middle-game-portion {
+    grid-template-columns: 1fr;
+  }
+
+  .menu, .areas {
+    height: 100px;
+  }
+
+  .area-box {
+    height: 200px;
+  }
 }

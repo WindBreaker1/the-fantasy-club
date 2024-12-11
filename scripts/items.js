@@ -2,7 +2,7 @@ import player from './player.js'
 import enemies from './enemy.js'
 
 // the constructor class for every item
-class Item {
+export class Item {
 	constructor(name, rarity, description) {
 		this.name = name;
 		this.rarity = rarity;

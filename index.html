@@ -9,116 +9,146 @@
   <title>The Fantasy Club</title>
 </head>
 <body>
-
+  <!-- Header -->
   <header id="header">
     <div>The Fantasy Club</div>
-    <div>A game by zaalmoxxis</div>
+    <div>A game by <a href="http://zaalmoxxis.com" target="_blank" rel="noopener noreferrer">zaalmoxxis</a></div>
   </header>
 
+  <!-- The Actual Game -->
   <div class="game-container">
-    <div class="middle-game-wrapper">
-      <div class="middle-game-portion">
-        <div class="menu">
-          <div id="player-name">Nameless</div>
-          <button id="inventory">Inventory</button>
-          <button id="resources">Resources</button>
-          <button id="stats">Stats</button>
-          <button id="codex">Codex</button>
-          <button id="credits">Credits</button>
-        </div>
-        
-        <div id="inventory-box" class="area-box">
-          <div class="area-box-title">Inventory</div>
-          <p>Your items will be listed here.</p>
-          <table id="inventory-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Rarity</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-    
-        <div id="resources-box" class="area-box">
-          <div class="area-box-title">Resources</div>
-          <p>Your resources will be listed here.</p>
-          <table id="resources-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Rarity</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Gold</td>
-                <td>Rare</td>
-                <td id="gold-amount-text">0</td>
-              </tr>
-              <tr>
-                <td>Wood</td>
-                <td>Common</td>
-                <td id="wood-amount-text">0</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-    
-        <div id="stats-box" class="area-box">
-          <div class="area-box-title">Player Statistics</div>
-          <p>Your stats will be shown here.</p>
-        </div>
-    
-        <div id="codex-box" class="area-box">
-          <div class="area-box-title">Codex</div>
-          <p>Game lore and information appear here.</p>
-        </div>
-    
-        <div id="credits-box" class="area-box">
-          <div class="area-box-title">Credits</div>
-          <p>Thank you for playing!</p>
-          <p>Coded by zaalmoxxis.</p>
-          <p>Consider supporting me on Patreon!</p>
-          <hr>
-          <p>Gore Forest BG image by <a href="https://www.pexels.com/@enginakyurt/" target="_blank" rel="noopener noreferrer">Engin Akyurt</a>.</p>
-          <hr>
-          <p>version 0.1</p>
-        </div>
-        
-        <div id="gore-forest-box" class="area-box">
-          <div class="area-box-title">Gore Forest</div>
-          <p>Advance the story of the game.</p>
-          <button id="explore-gore-forest-button">Advance Story</button>
-          <hr>
-          <p>Cut some of the surrounding trees with your axe.</p>
-          <button id="cut-wood-button">Cut Wood</button>
-        </div>
-        
-        <div class="areas">
-          <div>Areas</div>
-          <button id="goreForest">Gore Forest</button>
-        </div>
+    <!-- Middle Part -->
+    <div class="middle-game-portion">
+      <!-- Main Menu -->
+      <div class="menu">
+        <div id="player-name">Nameless</div>
+        <button id="inventory" class="menu-button">Inventory</button>
+        <button id="resources" class="menu-button">Resources</button>
+        <button id="stats" class="menu-button">Stats</button>
+        <button id="codex" class="menu-button">Codex</button>
+        <hr class="menu-horizontal-line">
+        <button id="save" class="menu-button">Save</button>
+        <button id="settings" class="menu-button">Settings</button>
+        <button id="credits" class="menu-button">Credits</button>
+      </div>
+      <!-- The Middle Boxes -->
+      <!-- Inventory -->
+      <div id="inventory-box" class="area-box">
+        <div class="area-box-title">Inventory</div>
+        <p>Your items will be listed here.</p>
+        <table id="inventory-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Rarity</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Resources -->
+      <div id="resources-box" class="area-box">
+        <div class="area-box-title">Resources</div>
+        <p>Your resources will be listed here.</p>
+        <table id="resources-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Rarity</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gold</td>
+              <td>Rare</td>
+              <td id="gold-amount-text">0</td>
+            </tr>
+            <tr>
+              <td>Wood</td>
+              <td>Common</td>
+              <td id="wood-amount-text">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Player Stats -->
+      <div id="stats-box" class="area-box">
+        <div class="area-box-title">Player Statistics</div>
+        <p>Your stats will be shown here.</p>
+      </div>
+      <!-- Game Codex -->
+      <div id="codex-box" class="area-box">
+        <div class="area-box-title">Codex</div>
+        <p>Game lore and information appear here.</p>
+      </div>
+      <!-- Save Progress -->
+      <div id="save-box" class="area-box">
+        <div class="area-box-title">Save & Load</div>
+        <p>Save your game!</p>
+        <button id="save-button">Save</button>
+        <p>Load your game!</p>
+        <textarea id="saveCodeInput" rows="4" cols="50" placeholder="Paste your saved game code here"></textarea>
+        <button id="load-button">Load</button>
+        <p>Reset your game!</p>
+        <button id="reset-button">Reset</button>
+      </div>
+      <!-- Settings -->
+      <div id="settings-box" class="area-box">
+        <div class="area-box-title">Settings</div>
+        <p>Change your settings!</p>
+        <label for="font-selector">Change the font family:</label>
+        <select id="font-selector">
+          <option value="Arial">Arial</option>
+          <option value="Monospace">Monospace</option>
+          <option value="Times New Roman">Times New Roman</option>
+        </select>
+      </div>
+      <!-- Credits -->
+      <div id="credits-box" class="area-box">
+        <div class="area-box-title">Credits</div>
+        <p>Thank you for playing!</p>
+        <p>Coded by zaalmoxxis.</p>
+        <p>Consider supporting me on Patreon!</p>
+        <hr>
+        <p>Gore Forest BG image by <a href="https://www.pexels.com/@enginakyurt/" target="_blank" rel="noopener noreferrer">Engin Akyurt</a>.</p>
+        <hr>
+        <p>version 0.1</p>
+      </div>
+      <!-- Area Boxes -->
+      <!-- Gore Forest -->
+      <div id="gore-forest-box" class="area-box">
+        <div class="area-box-title">Gore Forest</div>
+        <p>Advance the story of the game.</p>
+        <button id="explore-gore-forest-button">Advance Story</button>
+        <hr>
+        <p>Cut some of the surrounding trees with your axe.</p>
+        <button id="cut-wood-button">Cut Wood</button>
+      </div>
+      
+      <!-- Areas Selection Menu -->
+      <div class="areas">
+        <div>Areas</div>
+        <button id="goreForest" class="menu-button">Gore Forest</button>
       </div>
     </div>
-
-    
-    
+    <!-- The Dialogue Box -->
     <div class="dialogue-box"></div>
-    
+    <!-- The Button Choices Box -->
     <div class="choices"></div>
-    
+    <!-- The Text Input Box -->
     <input class="text-input" type="text" placeholder="Make your voice known...">
-    
   </div>
 
+  <!-- Maybe do something with canvas down the road? -->
   <canvas id="gameCanvas"></canvas>
+  <!-- Scripts -->
+  <script type="module" src="scripts/settings.js"></script>
+  <script type="module" src="scripts/areaBoxes.js"></script>
   <script type="module" src="game.js"></script>
 </body>
 </html>

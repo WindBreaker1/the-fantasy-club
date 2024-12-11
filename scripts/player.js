@@ -1,23 +1,27 @@
-import items from './items.js'
-import enemies from './enemy.js'
 import { addDialogue } from '../game.js';
 
 // inititalising player object
 const player = {
-	// important stuff
-	Name: 'Nameless',
-	Description: 'Buff dude.',
-	HP: 100,
-	MP: 100,
-	AP: 10,
-	Location: 'Womb',
+	// important information
+	info: {
+		name: 'Nameless',
+		description: 'Buff dude.',
+		location: 'Womb',
+	},
 	// player statistics
-	Strength: 1,
-	Dexterity: 1,
-	Intelligence: 1,
-	Constitution: 1,
-	Luck: 1,
-	Charisma: 1,
+	stats: {
+		currentHP: 100,
+		maxHP: 100,
+		currentMP: 100,
+		maxMP: 100,
+		defence: 10,
+		strength: 1,
+		dexterity: 1,
+		intelligence: 1,
+		constitution: 1,
+		luck: 1,
+		charisma: 1,
+	},
 	// inventory
 	inventory: {},
 	// resources
@@ -26,18 +30,26 @@ const player = {
 		wood: 0,
 	},
 	// player game states
-	isDead: false,
-	hasAxe: true,
-	hasPickaxe: false,
-	hasWeapon: false,
-	endingsUnlocked: {
-		ending_one: false,
+	gameState: {
+		isDead: false,
+		hasAxe: true,
+		hasPickaxe: false,
+		hasWeapon: false,
 	},
 	// functions
-	takeDamage(damage) {
-		this.HP -= damage;
-		addDialogue("[Game]", `${this.Name} takes ${damage} damage...`)
+	takeDamage(amount) {
+		this.stats.currentHP -= amount;
+		addDialogue("[Game]", `${this.info.name} takes ${amount} damage...`)
 	},
+	heal(amount) {
+		if (this.stats.currentHP < this.stats.maxHP) {
+			let healAmount = Math.min(amount, this.stats.maxHP-this.stats.currentHP);
+			this.stats.currentHP += healAmount;
+			addDialogue("[Game]", `${this.info.name} heals ${amount} points!`)
+		} else {
+			addDialogue("[Game]", "You're fully healed!")
+		}
+	}
 }
 
 export default player;

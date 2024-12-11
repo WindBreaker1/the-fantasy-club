@@ -9,11 +9,11 @@ An open-world text-adventure game.
 
 ## 📜To-Do
 
-- [ ] Make the game container a grid and perfectly align each game element within that box, while making it responsive on mobile.
 - [ ] Change the stats page with written HTML (don't generate the stats with JS from the object).
-- [ ] Add requirements to some of the choices (for example, you may need 5 wood to build a bridge).
-- [ ] Choose a better text font for the game.
+- [ ] Add settings for font family.
+- [x] Add requirements to some of the choices (for example, you may need 5 wood to build a bridge).
+- [x] Make the game container a grid and perfectly align each game element within that box, while making it responsive on mobile.
 
 ## 🐞Bugs
 
-- Nothing at the moment 😄
+- [ ] Player inventory doesn't save.
