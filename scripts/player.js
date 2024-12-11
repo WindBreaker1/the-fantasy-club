@@ -1,4 +1,4 @@
-import { addDialogue } from '../game.js';
+import { addDialogue, refreshPlayerStatsText, refreshResourcesText, refreshItemTable } from '../game.js';
 
 // inititalising player object
 const player = {
@@ -40,15 +40,25 @@ const player = {
 	// functions
 	takeDamage(amount) {
 		this.stats.currentHP -= amount;
-		addDialogue("[Game]", `${this.info.name} takes ${amount} damage...`)
+		addDialogue("Game", `${this.info.name} takes ${amount} damage...`);
+
+		// refresh text areas
+		refreshPlayerStatsText();
+		refreshResourcesText();
+		refreshItemTable();
 	},
 	heal(amount) {
 		if (this.stats.currentHP < this.stats.maxHP) {
 			let healAmount = Math.min(amount, this.stats.maxHP-this.stats.currentHP);
 			this.stats.currentHP += healAmount;
-			addDialogue("[Game]", `${this.info.name} heals ${amount} points!`)
+			addDialogue("Game", `${this.info.name} heals ${amount} points!`)
+
+			// refresh text areas
+			refreshPlayerStatsText();
+			refreshResourcesText();
+			refreshItemTable();
 		} else {
-			addDialogue("[Game]", "You're fully healed!")
+			addDialogue("Game", "You're fully healed!")
 		}
 	}
 }
