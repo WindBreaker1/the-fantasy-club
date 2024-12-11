@@ -21,7 +21,7 @@
     <div class="middle-game-portion">
       <!-- Main Menu -->
       <div class="menu">
-        <div id="player-name">Nameless</div>
+        <div class="player-name-text">Name</div>
         <button id="inventory" class="menu-button">Inventory</button>
         <button id="resources" class="menu-button">Resources</button>
         <button id="stats" class="menu-button">Stats</button>
@@ -80,6 +80,36 @@
       <div id="stats-box" class="area-box">
         <div class="area-box-title">Player Statistics</div>
         <p>Your stats will be shown here.</p>
+        <table id="stats-table">
+          <thead>
+            <tr>
+              <th>Label</th>
+              <th>Info</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Name</td>
+              <td class="player-name-text-two">Name</td>
+            </tr>
+            <tr>
+              <td>Health Points (HP)</td>
+              <td class="hp-amount-text">0</td>
+            </tr>
+            <tr>
+              <td>Magic Points (MP)</td>
+              <td class="mp-amount-text">0</td>
+            </tr>
+            <tr>
+              <td>Defense</td>
+              <td class="defense-amount-text">0</td>
+            </tr>
+            <tr>
+              <td>Attack</td>
+              <td class="attack-amount-text">0</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <!-- Game Codex -->
       <div id="codex-box" class="area-box">

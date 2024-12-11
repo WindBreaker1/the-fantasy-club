@@ -5,8 +5,16 @@ import enemies from './scripts/enemy.js'
 import { settings } from './scripts/settings.js';
 
 // ================================= HTML DOM elements ================================ //
-// intialize dialogue box
+// intialize all the different boxes
 const dialogueBox = document.querySelector(".dialogue-box");
+const statsBox = document.querySelector("#stats-box");
+// stat-box-text
+const playerNameText = document.querySelector(".player-name-text");
+const playerNameTextTwo = document.querySelector(".player-name-text-two");
+const hpAmountText = document.querySelector(".hp-amount-text");
+const mpAmountText = document.querySelector(".mp-amount-text");
+const defenseAmountText = document.querySelector(".defense-amount-text");
+const attackAmountText = document.querySelector(".attack-amount-text");
 // intialize text input
 const textInput = document.querySelector(".text-input");
 // intialize wood amount text
@@ -16,23 +24,91 @@ const saveGameButton = document.querySelector("#save-button");
 const loadGameButton = document.querySelector("#load-button");
 const resetGameButton = document.querySelector("#reset-button");
 
+// ================================== Important Functions =================================== //
 
-// targeting html container for player stats
-const statsBox = document.querySelector("#stats-box");
-
-/**
- * @description for each stat in player, create a new div
- * @returns {HTMLElement} statistic-name: statistic-value
- * @todo n/a
-*/
-for (const stat in player) {
-  const statElement = document.createElement("div");
-  statElement.textContent = `${stat}: ${player[stat]}`
-  statsBox.appendChild(statElement);
+// function for adding dialogue text to the dialogue box
+export function addDialogue(speaker, dialogue) {
+  const dialogueDiv = document.createElement("div");
+  dialogueDiv.textContent = `${speaker}: ${dialogue}`;
+  //dialogueBox.insertBefore(dialogueDiv, dialogueBox.firstChild);
+  dialogueBox.appendChild(dialogueDiv);
+  dialogueBox.scrollTop = dialogueBox.scrollHeight;
 }
 
+/**
+ * @description refresh the player stats texts
+ * @returns {textContent} statistic-value
+ * @todo n/a
+*/
+export function refreshPlayerStatsText() {
+  playerNameText.textContent = player.info.name;
+  playerNameTextTwo.textContent = player.info.name;
+  hpAmountText.textContent = player.stats.currentHP;
+  mpAmountText.textContent = player.stats.currentMP;
+  defenseAmountText.textContent = player.stats.defense;
+  attackAmountText.textContent = player.stats.attack;
+}
+// refresh player stats upon page refresh
+refreshPlayerStatsText();
 
-// ==================================== Gore Forest =============================== //
+
+
+
+// ===================================== Secondary Functions ============================= //
+
+// on Enter keypress, add the input text to the dialogue box
+textInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    const inputValue = textInput.value;
+    addDialogue(`[${player.info.name}]`, inputValue);
+    textInput.value = "";
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================================================= //
+// ===================================== UNFINISHED CODE =================================== //
+// ========================================================================================= //
+
+
+
+
+
+
+
+
+
+
+// ======================================= Gore Forest =================================== //
 
 // gore forest
 const GoreForest = {
@@ -57,15 +133,7 @@ cutWoodButton.addEventListener("click", () => {
 
 
 
-// on Enter keypress, add the text to the dialogue box
-textInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    const inputValue = textInput.value;
-    addDialogue(player.Name, inputValue);
-    textInput.value = "";
-  }
-})
+
 
 // ================================== Story ===================================== //
 // gore forest story
@@ -157,47 +225,6 @@ displayScene(currentScene);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ================================ Important Functions =============================== //
-
-// function for adding dialogue text to the dialogue box
-export function addDialogue(speaker, dialogue) {
-  const dialogueDiv = document.createElement("div");
-  dialogueDiv.textContent = `${speaker}: ${dialogue}`;
-  //dialogueBox.insertBefore(dialogueDiv, dialogueBox.firstChild);
-  dialogueBox.appendChild(dialogueDiv);
-  dialogueBox.scrollTop = dialogueBox.scrollHeight;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-// =================================== Testing Area ====================================== //
-
-// put the player's chosen name inside the menu
-const playerNameText = document.querySelector("#player-name");
-playerNameText.textContent = player.Name;
 
 
 
@@ -348,7 +375,7 @@ function loadGameFromInput() {
   }
 }
 
-document.querySelector("#load-button").addEventListener("click", loadGameFromInput);
+loadGameButton.addEventListener("click", loadGameFromInput);
 
 // loading the game upon reload of the page
 function reloadGame() {
@@ -361,7 +388,6 @@ function reloadGame() {
 }
 
 
-// eyJ2ZXJzaW9uIjowLjEsImN1cnJlbnRTY2VuZSI6ImdmXzEiLCJzZXR0aW5ncyI6WyJBcmlhbCJdLCJwbGF5ZXIiOnsiaW52ZW50b3J5IjpbXSwicmVzb3VyY2VzIjp7ImdvbGQiOjAsIndvb2QiOjB9fX0=
 
 
 
