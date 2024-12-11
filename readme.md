@@ -12,6 +12,8 @@ An open-world text-adventure game.
 - [ ] Add saving for settings.
 - [ ] Add a cleaner reset for all things.
 - [ ] Consider putting the 'advance story' button in one central area, instead of splitting it in between all areas.
+- [ ] Move the story to a separate file, so you have more space.
+- [ ] Find a way to use innerHTML safely, without falling prey to attacks, so you can use colored and animated text.
 - [x] Change the stats page with written HTML (don't generate the stats with JS from the object).
 - [x] Add settings for font family.
 - [x] Add requirements to some of the choices (for example, you may need 5 wood to build a bridge).

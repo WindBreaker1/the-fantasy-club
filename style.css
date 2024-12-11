@@ -176,6 +176,20 @@ select {
   width: 80%;
 }
 
+.red-text {
+  color: #ad0b0b;
+  animation: fadeInOut 2s infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.6; /* Start and end invisible */
+  }
+  50% {
+    opacity: 1; /* Fully visible at midpoint */
+  }
+}
+
 /* ================================= Individual Areas ================================= */
 
 #gore-forest-box {

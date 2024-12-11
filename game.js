@@ -35,7 +35,7 @@ const exploreGoreForestButton = document.querySelector("#explore-gore-forest-but
 */
 export function addDialogue(speaker, dialogue) {
   const dialogueDiv = document.createElement("div");
-  dialogueDiv.textContent = `[${speaker}]: ${dialogue}`;
+  dialogueDiv.innerHTML = `[${speaker}]: ${dialogue}`;
   //dialogueBox.insertBefore(dialogueDiv, dialogueBox.firstChild);
   dialogueBox.appendChild(dialogueDiv);
   dialogueBox.scrollTop = dialogueBox.scrollHeight;
@@ -155,7 +155,7 @@ let currentScene = "gf_0";
 // ======================================= Gore Forest ===================================== //
 const goreForestStory = {
   gf_0: { speaker: `Game`, text: `You wake up in a dark, dark place.`, next: `gf_1` },
-  gf_1: { speaker: `Game`, text: `It's eerily silent...`, next: `gf_2` },
+  gf_1: { speaker: `Game`, text: `It's <span class='red-text'>eerily</span> silent...`, next: `gf_2` },
   gf_2: { speaker: `Game`, text: `It's moist...`, next: `gf_3` },
   gf_3: { speaker: `Game`, text: `It smells of flowers...`, next: `gf_4` },
   gf_4: { speaker: `Game`, text: `You see a faint light in the far distance...`, next: `gf_5` },
