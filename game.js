@@ -23,7 +23,6 @@ const goldAmountText = document.querySelector("#gold-amount-text");
 const woodAmountText = document.querySelector("#wood-amount-text");
 // save, load, and reset buttons
 const saveGameButton = document.querySelector("#save-button");
-const loadGameButton = document.querySelector("#load-button");
 const resetGameButton = document.querySelector("#reset-button");
 // gore forest
 const cutWoodButton = document.querySelector("#cut-wood-button");
@@ -155,11 +154,11 @@ let currentScene = "gf_0";
 
 // ======================================= Gore Forest ===================================== //
 const goreForestStory = {
-  gf_0: { speaker: `Game`, text: `You wake up in a dark, dark place.`, next: "gf_1" },
-  gf_1: { speaker: `Game`, text: `It's eerily silent...`, next: "gf_2" },
-  gf_2: { speaker: `Game`, text: `It's moist...`, next: "gf_3" },
-  gf_3: { speaker: `Game`, text: `It smells of flowers...`, next: "gf_4" },
-  gf_4: { speaker: `Game`, text: `You see a faint light in the far distance...`, next: "gf_5" },
+  gf_0: { speaker: `Game`, text: `You wake up in a dark, dark place.`, next: `gf_1` },
+  gf_1: { speaker: `Game`, text: `It's eerily silent...`, next: `gf_2` },
+  gf_2: { speaker: `Game`, text: `It's moist...`, next: `gf_3` },
+  gf_3: { speaker: `Game`, text: `It smells of flowers...`, next: `gf_4` },
+  gf_4: { speaker: `Game`, text: `You see a faint light in the far distance...`, next: `gf_5` },
   gf_5: {
     speaker: `Yourself`,
     text: `Do you respond to the light? (You need 5 Wood...)`,
@@ -271,120 +270,83 @@ function updateChoices() {
 // ======================================= SAVING LOGIC ==================================== //
 // ========================================================================================= //
 
-// =================================== Saving Progress =========================== //
-
-// saving the game
+// ==================================== Saving Progress ==================================== //
 function saveGame() {
   const gameState = {
     version: 0.1,
 
     currentScene,
+    player,
     settings,
-    player: {
-      inventory: Object.values(player.inventory).map(item => ({
-        name: item.name,
-        rarity: item.rarity,
-        description: item.description,
-      })),
-      resources: player.resources,
-    },
   }
 
-   // Serialize and encode the game state
   const jsonString = JSON.stringify(gameState);
-  // Base64 encoding
-  const saveCode = btoa(jsonString);
-  // save in localStorage
-  localStorage.setItem("gameSave", saveCode);
-  // tell the player you saved their game
+  localStorage.setItem("gameSave", jsonString);
   addDialogue("Game", "You saved your progress!");
-
-  console.log(`${saveCode}`);
-  
-  return saveCode;
 }
 
 saveGameButton.addEventListener("click", () => saveGame());
 
-// loading the game
-function loadGame(saveCode) {
+// ==================================== Loading Progress ==================================== //
+function loadGameFromStorage() {
   try {
-    // Decode the Base64 save code
-    const jsonString = atob(saveCode);
-    const gameState = JSON.parse(jsonString);
+    const savedData = localStorage.getItem("gameSave");
 
-    // Restore game state
+    if (!savedData) {
+      addDialogue("Game", "No saved game found.");
+      console.error("No saved game found in localStorage.");
+      return;
+    }
+
+    const gameState = JSON.parse(savedData);
+
+    // Restore the game state
     currentScene = gameState.currentScene;
-    settings = gameState.settings;
-    Object.assign(player.resources, gameState.player.resources);
+    Object.assign(player, gameState.player); // Ensure we retain references to the player object
+    Object.assign(settings, gameState.settings);
 
+    // Refresh UI elements
+    refreshPlayerStatsText();
     refreshResourcesText();
+    refreshItemTable();
 
     // Load the scene
     displayScene(currentScene);
     console.log("Game loaded successfully!");
+    addDialogue("Game", "Your progress has been loaded!");
   } catch (error) {
-    console.error("Failed to load game. Invalid save code.");
+    console.error("Failed to load game. Corrupted save data.", error);
+    addDialogue("Game", "Failed to load progress. Save data is corrupted.");
   }
 }
 
-function loadGameFromInput() {
-  const saveCode = document.getElementById("saveCodeInput").value;
-  
-  if (saveCode) {
-    loadGame(saveCode);
-  } else {
-    console.error("No save code provided.");
-  }
-}
-
-loadGameButton.addEventListener("click", loadGameFromInput);
-
-// loading the game upon reload of the page
+// Automatically load the game when the page reloads
 function reloadGame() {
   window.addEventListener("load", () => {
-    const savedCode = localStorage.getItem("gameSave");
-    if (savedCode) {
-      loadGame(savedCode);
+    const savedData = localStorage.getItem("gameSave");
+    if (savedData) {
+      loadGameFromStorage();
     }
   });
 }
 
-// resetting the game
+reloadGame();
+
+// ==================================== Resetting Progress ==================================== //
 function resetGame() {
   localStorage.removeItem("gameSave");
 
   currentScene = "gf_0";
 
-  player.Name = 'Nameless';
-  player.Description = 'Buff dude.';
-  player.HP = 100;
-  player.MP = 100;
-  player.AP = 10;
-  player.Location = 'Womb';
-  player.Strength = 1;
-  player.Dexterity = 1;
-  player.Intelligence = 1;
-  player.Constitution = 1;
-  player.Luck = 1;
-  player.Charisma = 1;
-  player.inventory = {};
-  player.resources = { gold: 0, wood: 0 };
-  player.isDead = false;
-  player.hasAxe = true;
-  player.hasPickaxe = false;
-  player.hasWeapon = false;
-  player.endingsUnlocked = { ending_one: false };
-
-  // Update UI elements (if necessary)
+  // refresh text areas
+  refreshPlayerStatsText();
   refreshResourcesText();
+  refreshItemTable();
+
   addDialogue("Game", "Your progress has been reset.");
-  
-  
-  console.log("Game progress reset to the beginning.");
 }
 
-resetGameButton.addEventListener("click", () => {resetGame()});
+resetGameButton.addEventListener("click", () => resetGame());
 
 
 

@@ -125,7 +125,7 @@ select {
   align-items: center;
   border: 1px solid grey;
   padding: 10px;
-  gap: 20px;
+  gap: 10px;
   height: 300px;
   overflow: auto;
   flex: 0 0 20%;

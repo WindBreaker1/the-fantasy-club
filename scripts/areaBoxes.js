@@ -34,4 +34,4 @@ Object.keys(buttonToBoxMap).forEach(buttonId => {
 });
 
 //intializing on game start
-showAreaBox('stats-box');
+showAreaBox('gore-forest-box');

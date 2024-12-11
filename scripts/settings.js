@@ -2,11 +2,10 @@
 
 const fontSelector = document.querySelector("#font-selector");
 
-let fontChoice = fontSelector.value;
 
-export const settings = [
-  fontChoice,
-];
+export const settings = {
+  fontChoice: fontSelector.value,
+};
 
 /**
  * @description code that changes the font
