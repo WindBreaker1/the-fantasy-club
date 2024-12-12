@@ -28,6 +28,23 @@ const resetGameButton = document.querySelector("#reset-button");
 const cutWoodButton = document.querySelector("#cut-wood-button");
 const exploreGoreForestButton = document.querySelector("#explore-gore-forest-button");
 
+// ========================================== Sounds ======================================== //
+
+const clickSound = new Audio("./public/click.mp3");
+const cutWoodSound = new Audio("./public/log-split.mp3");
+
+clickSound.volume = 0.5;
+cutWoodSound.volume = 0.5;
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Prevent overlapping sounds
+    clickSound.currentTime = 0;
+    clickSound.play();
+  });
+});
+
 // ================================== Important Functions =================================== //
 
 /**
@@ -118,17 +135,27 @@ export function refreshItemTable() {
 refreshItemTable();
 
 
+// put all functions in a single object
+export const game = {
+  addDialogue,
+  refreshPlayerStatsText,
+  refreshResourcesText,
+  spendResource,
+  addItem,
+  refreshItemTable,
+}
+
 // ================================= Secondary Functions ================================== //
 
 // on Enter keypress, add the input text to the dialogue box
-textInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    const inputValue = textInput.value;
-    addDialogue(`${player.info.name}`, inputValue);
-    textInput.value = "";
-  }
-})
+// textInput.addEventListener("keydown", (event) => {
+//   if (event.key === "Enter") {
+//     event.preventDefault();
+//     const inputValue = textInput.value;
+//     addDialogue(`${player.info.name}`, inputValue);
+//     textInput.value = "";
+//   }
+// })
 
 /**
  * @description function for incrementing wood by 1
@@ -138,6 +165,7 @@ cutWoodButton.addEventListener("click", () => {
     addDialogue("Game", "You don't have an axe...")
   } else {
     player.resources.wood += 1;
+    cutWoodSound.play();
     addDialogue("Game", "You cut some wood!");
     refreshResourcesText();
     updateChoices();
@@ -150,7 +178,7 @@ cutWoodButton.addEventListener("click", () => {
 // ======================================= STORY LOGIC ===================================== //
 // ========================================================================================= //
 
-let currentScene = "gf_0";
+
 
 // ======================================= Gore Forest ===================================== //
 const goreForestStory = {
@@ -180,17 +208,22 @@ const goreForestStory = {
       { text: `Reset Universe`, effect: () => resetGame() }
     ]
   },
-  gf_7: { speaker: `Game`, text: `She had pale skin, pure white, long hair, and angular face features. Her eyes were a pale blue, almost as pale as her smooth skin.`, next: `gf_8` },
+  gf_7: { speaker: `Game`, text: `She had pure white, long hair, and angular face features. Her eyes were a pale blue, almost as pale as her smooth skin.`, next: `gf_8` },
   gf_8: { speaker: `Erina`, text: `Break from your cocoon, ${player.info.name}.`, next: `gf_9` },
   gf_9: { speaker: `Erina`, text: `Break free from this prison womb, ${player.info.name}...`, next: `gf_10` },
   gf_10: { speaker: `${player.info.name}`, text: `You struggle and you struggle...`, next: `gf_11` },
   gf_11: { speaker: `${player.info.name}`, text: `...Until finally you breathe fresh air.`, next: `gf_12` },
-  gf_12: { speaker: `Game`, text: `The rotting corpse from which you spawned out of burst at the seams at your birth.`, next: null },
-
+  gf_12: { speaker: `Game`, text: `The rotting corpse from which you spawned out of burst at the seams at your birth.`, next: `gf_13` },
+  gf_13: { speaker: `Erina`, text: `Alright, next up, we're going to Drake Valley!`, next: `dv_0` },
 
   // template
   gf_t: { speaker: `Game`, text: ``, next: `gf_t` },
 };
+
+
+
+
+
 
 const choicesDiv = document.querySelector(".choices");
 

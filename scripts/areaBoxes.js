@@ -14,6 +14,7 @@ const buttonToBoxMap = {
   settings: 'settings-box',
 	credits: 'credits-box',
 	// areas
+  festeringWomb: 'festering-womb-box',
 	goreForest: 'gore-forest-box',
 };
 

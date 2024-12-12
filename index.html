@@ -22,6 +22,7 @@
       <!-- Main Menu -->
       <div class="menu">
         <div class="player-name-text">Name</div>
+        <button id="main-quest" class="menu-button">Main Quest</button>
         <button id="inventory" class="menu-button">Inventory</button>
         <button id="resources" class="menu-button">Resources</button>
         <button id="stats" class="menu-button">Stats</button>
@@ -142,6 +143,7 @@
         <p>Coded by zaalmoxxis.</p>
         <p>Consider supporting me on Patreon!</p>
         <hr>
+        <p>Festering Womb BG image by <a href="https://pixabay.com/users/pexels-2286921/" target="_blank" rel="noopener noreferrer">Pexels</a>.</p>
         <p>Gore Forest BG image by <a href="https://www.pexels.com/@enginakyurt/" target="_blank" rel="noopener noreferrer">Engin Akyurt</a>.</p>
         <hr>
         <p>Version History</p>
@@ -150,6 +152,12 @@
         </ul>
       </div>
       <!-- Area Boxes -->
+      <!-- Festering Womb -->
+      <div id="festering-womb-box" class="area-box">
+        <div class="area-box-title">Festering Womb</div>
+        <p>Advance the story.</p>
+        <button id="explore-festering-womb-button">Advance Story</button>
+      </div>
       <!-- Gore Forest -->
       <div id="gore-forest-box" class="area-box">
         <div class="area-box-title">Gore Forest</div>
@@ -158,6 +166,9 @@
         <hr>
         <p>Cut some of the surrounding trees with your axe.</p>
         <button id="cut-wood-button">Cut Wood</button>
+        <hr>
+        <p>Quest: Abandoned Shack</p>
+        <button id="quest-one-button">Explore</button>
       </div>
       
       <!-- Areas Selection Menu -->
@@ -176,7 +187,7 @@
     <!-- The Button Choices Box -->
     <div class="choices"></div>
     <!-- The Text Input Box -->
-    <input class="text-input" type="text" placeholder="Make your voice known...">
+    <!-- <input class="text-input" type="text" placeholder="Make your voice known..."> -->
   </div>
 
   <!-- Maybe do something with canvas down the road? -->
@@ -184,6 +195,7 @@
   <!-- Scripts -->
   <script type="module" src="scripts/settings.js"></script>
   <script type="module" src="scripts/areaBoxes.js"></script>
+  <script type="module" src="scripts/story.js"></script>
   <script type="module" src="game.js"></script>
 </body>
 </html>

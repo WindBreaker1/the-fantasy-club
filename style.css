@@ -193,8 +193,14 @@ select {
 /* ================================= Individual Areas ================================= */
 
 #gore-forest-box {
-  background-color: #181818;
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./public/gore-forest.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#festering-womb-box {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./public/festering-womb.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
