@@ -15,6 +15,7 @@ An open-world text-adventure game.
 - [ ] Move the story to a separate file, so you have more space.
 - [ ] Add sound effects to buttons.
 - [ ] Add ambient soundtrack.
+- [ ] Add stress and hope stats.
 - [x] Change the stats page with written HTML (don't generate the stats with JS from the object).
 - [x] Add settings for font family.
 - [x] Add requirements to some of the choices (for example, you may need 5 wood to build a bridge).

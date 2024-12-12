@@ -92,6 +92,18 @@ export function spendResource(resource, amount) {
 }
 
 /**
+ * @description function for adding stats to player
+*/
+export function addStats(stat, amount) {
+  if (player.stats[stat]) {
+    player.stats[stat] += amount;
+    refreshPlayerStatsText;
+    return true;
+  }
+  return false;
+}
+
+/**
  * @description function for adding items to the inventory
 */
 export function addItem(item) {
@@ -141,6 +153,7 @@ export const game = {
   refreshPlayerStatsText,
   refreshResourcesText,
   spendResource,
+  addStats,
   addItem,
   refreshItemTable,
 }
@@ -276,7 +289,7 @@ function displayScene(sceneKey) {
   }
 }
 
-displayScene(currentScene);
+
 
 
 // function for updating choices
