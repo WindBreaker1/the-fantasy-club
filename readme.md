@@ -24,6 +24,7 @@ An open-world text-adventure game.
 ### Future Updates
 
 - [ ] Add combat.
+- [ ] Add minigames.
 - [ ] Style the scroll bars.
 - [ ] Find a way to integrate user input into the game.
 
