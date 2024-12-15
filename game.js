@@ -1,7 +1,8 @@
 // ===================================== Imports ==================================== //
-import player from './scripts/player.js'
-import items, { Item } from './scripts/items.js'
-import enemies from './scripts/enemy.js'
+import player from './scripts/player.js';
+import items, { Item } from './scripts/items.js';
+import { stories, currentStory, currentScene } from './scripts/story.js';
+import enemies from './scripts/enemy.js';
 import { settings } from './scripts/settings.js';
 
 // ================================= HTML DOM elements ================================ //
@@ -191,63 +192,34 @@ cutWoodButton.addEventListener("click", () => {
 // ======================================= STORY LOGIC ===================================== //
 // ========================================================================================= //
 
+currentStory;
+currentScene;
 
-
-// ======================================= Gore Forest ===================================== //
-const goreForestStory = {
-  gf_0: { speaker: `Game`, text: `You wake up in a dark, dark place.`, next: `gf_1` },
-  gf_1: { speaker: `Game`, text: `It's <span class='red-text'>eerily</span> silent...`, next: `gf_2` },
-  gf_2: { speaker: `Game`, text: `It's moist...`, next: `gf_3` },
-  gf_3: { speaker: `Game`, text: `It smells of flowers...`, next: `gf_4` },
-  gf_4: { speaker: `Game`, text: `You see a faint light in the far distance...`, next: `gf_5` },
-  gf_5: {
-    speaker: `Yourself`,
-    text: `Do you respond to the light? (You need 5 Wood...)`,
-    choices: [
-      { text: `Yes`,
-        next: `gf_6`,
-        requirement: () => player.resources.wood >= 5,
-        effect: () => {player.takeDamage(50); addItem(items.Shovel); spendResource('wood', 5);} 
-      },
-      { text: `No`, next: `ending_one` }
-    ]
-  },
-  gf_6: { speaker: `Game`, text: `An angelic voice calls out to you.`, next: `gf_7` },
-  ending_one: { 
-    speaker: `Game`, 
-    text: `You choose to stay in the dark and warm embrace of death...`,
-    next: null,
-    choices: [
-      { text: `Reset Universe`, effect: () => resetGame() }
-    ]
-  },
-  gf_7: { speaker: `Game`, text: `She had pure white, long hair, and angular face features. Her eyes were a pale blue, almost as pale as her smooth skin.`, next: `gf_8` },
-  gf_8: { speaker: `Erina`, text: `Break from your cocoon, ${player.info.name}.`, next: `gf_9` },
-  gf_9: { speaker: `Erina`, text: `Break free from this prison womb, ${player.info.name}...`, next: `gf_10` },
-  gf_10: { speaker: `${player.info.name}`, text: `You struggle and you struggle...`, next: `gf_11` },
-  gf_11: { speaker: `${player.info.name}`, text: `...Until finally you breathe fresh air.`, next: `gf_12` },
-  gf_12: { speaker: `Game`, text: `The rotting corpse from which you spawned out of burst at the seams at your birth.`, next: `gf_13` },
-  gf_13: { speaker: `Erina`, text: `Alright, next up, we're going to Drake Valley!`, next: `dv_0` },
-
-  // template
-  gf_t: { speaker: `Game`, text: ``, next: `gf_t` },
-};
-
-
-
-
-
-
+const mainQuestButton = document.querySelector("#main-quest");
 const choicesDiv = document.querySelector(".choices");
 
-exploreGoreForestButton.addEventListener("click", () => {
-   if (currentScene) {
-    displayScene(currentScene);
+
+mainQuestButton.addEventListener("click", () => {
+  if (!currentStory || !currentScene) {
+    startStory('main', 'mq_0'); // Start from the beginning if no current state
+  } else {
+    displayScene(currentScene); // Continue from the current state
   }
-})
+});
+
+// Utility function to retrieve nested scenes
+function getNestedScene(story, sceneKey) {
+  for (const act of Object.values(story)) {
+    if (act[sceneKey]) {
+      return act[sceneKey];
+    }
+  }
+  return null; // Scene not found
+}
 
 function displayScene(sceneKey) {
-  const scene = goreForestStory[sceneKey];
+  const story = stories[currentStory];
+  const scene = getNestedScene(story, sceneKey);
 
   if (scene.text) {
     addDialogue(scene.speaker, scene.text);
@@ -279,22 +251,20 @@ function displayScene(sceneKey) {
 
       choicesDiv.appendChild(button);
     });
-    exploreGoreForestButton.disabled = true; // Hide explore button while making a choice
+    mainQuestButton.disabled = true; // Hide explore button while making a choice
   } else {
-    exploreGoreForestButton.disabled = false; // Show explore button if no choices
+    mainQuestButton.disabled = false; // Show explore button if no choices
     currentScene = scene.next; // Update the next scene
     if (!scene.next) {
-      exploreGoreForestButton.disabled = true; // Disable explore if there are no more scenes
+      mainQuestButton.disabled = true; // Disable explore if there are no more scenes
     }
   }
 }
 
-
-
-
 // function for updating choices
 function updateChoices() {
-  const scene = goreForestStory[currentScene];
+  const story = stories[currentStory];
+  const scene = story[sceneKey];
 
   if (scene.choices) {
     const buttons = choicesDiv.querySelectorAll("button");
@@ -307,8 +277,17 @@ function updateChoices() {
   }
 }
 
+// function for starting the story
+function startStory(storyKey, sceneKey = null) {
+  if (!stories[storyKey]) {
+    console.error(`Story ${storyKey} not found`);
+    return;
+  }
 
-
+  currentStory = storyKey;
+  currentScene = sceneKey || Object.keys(stories[storyKey])[0]; // Default to the first scene
+  displayScene(currentScene);
+}
 
 
 
